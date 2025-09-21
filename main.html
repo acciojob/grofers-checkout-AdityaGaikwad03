@@ -1,14 +1,10 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
-	<link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-    <!-- the entire body must be written by student -->
-    <table style="width: 100%">
+  <table style="width: 100%">
     <caption>
       Monthly savings
     </caption>
@@ -37,9 +33,39 @@
       <td class="price">50</td>
     </tr>
   </table>
-    <script type="text/javascript" src="./script.js">
-</script>
 
+  <script type="text/javascript">
+    const getSumBtn = document.createElement("button");
+    getSumBtn.append("Get Total Price");
+    document.body.appendChild(getSumBtn);
+
+    const getSum = () => {
+      const priceCells = document.querySelectorAll(".price");
+      let total = 0;
+
+      priceCells.forEach(cell => {
+        total += parseInt(cell.textContent);
+      });
+
+      // remove old total row if it exists
+      const oldTotal = document.querySelector("#ans");
+      if (oldTotal) {
+        oldTotal.parentElement.remove();
+      }
+
+      // create new row
+      const table = document.querySelector("table");
+      const newRow = document.createElement("tr");
+      const newCell = document.createElement("td");
+      newCell.colSpan = 2;
+      newCell.style.fontWeight = "bold";
+      newCell.id = "ans"; // ✅ important for Cypress test
+      newCell.textContent = total;
+      newRow.appendChild(newCell);
+      table.appendChild(newRow);
+    };
+
+    getSumBtn.addEventListener("click", getSum);
+  </script>
 </body>
-
 </html>
